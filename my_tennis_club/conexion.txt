@@ -1,0 +1,6 @@
+
+
+
+DB_URI=mongodb://localhost:27017/
+DB_NAME=20241127
+COLLECTION_NAME=mdh

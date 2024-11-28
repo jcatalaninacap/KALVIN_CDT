@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de Tickets - Especialistas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Información de Tickets</h1>
+
+        <!-- Filtro por especialista -->
+        <div class="d-flex justify-content-center mb-4">
+            <form method="get" action="{% url 'members:especialistas_view' %}">
+
+                <label for="especialista" class="form-label">Selecciona Especialista:</label>
+                <select id="especialista" name="especialista_id" class="form-select w-50">
+                    <option value="todas" {% if especialista_seleccionado == "todas" %}selected{% endif %}>Ver todos</option>
+                    {% for especialista in especialistas %}
+                        <option value="{{ especialista.id }}" {% if especialista_seleccionado == especialista.id %}selected{% endif %}>
+                            {{ especialista.nombre }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary mt-3" aria-label="Filtrar por especialista">Filtrar</button>
+            </form>
+        </div>
+
+        <!-- Tabla de resultados -->
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered text-center align-middle table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th scope="col">Número de Ticket</th>
+                        <th scope="col">Especialista</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Tipo</th>
+                        <th scope="col">Fecha de Resolución</th>
+                        <th scope="col">Fecha de Creación</th>
+                        <th scope="col">Fecha de Modificación</th>
+                        <th scope="col">Tiempo de Resolución (Minutos)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in data %}
+                        <tr onclick="window.open('https://soluciones.cencosud.com/ticket/{{ item.Numero_de_ticket }}', '_blank')" style="cursor: pointer;">
+                            <td>{{ item.Numero_de_ticket }}</td>
+                            <td>{{ item.Especialista }}</td>
+                            <td>{{ item.Estado }}</td>
+                            <td>{{ item.Tipo }}</td>
+                            <td>{{ item.resolutionDate }}</td>
+                            <td>{{ item.Fecha_de_creacion }}</td>
+                            <td>{{ item.Fecha_de_modificacion }}</td>
+                            <td>{{ item.Tiempo_resolucion }}</td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-muted">No hay datos disponibles para este especialista.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
