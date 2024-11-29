@@ -45,7 +45,7 @@ class EspecialistaService:
                                             {"$toDate": "$Fecha de creacion"},
                                         ]
                                     },
-                                    1000 * 60,
+                                    1000 * 60 * 60,
                                 ]
                             },
                             2,
